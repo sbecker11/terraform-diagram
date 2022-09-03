@@ -1,3 +1,10 @@
+variable "MYSQL_USERNAME" {
+   type=string
+}
+variable "MYSQL_PASSWORD" {
+   type=string
+}
+
 ## DB Subent Group
 
 resource "aws_db_subnet_group" "dac_db_subnet_group" {
@@ -19,8 +26,8 @@ resource "aws_db_instance" "dac_db" {
   instance_class          = "db.t2.micro"
   name                    = "mydb"
   identifier              = "dacdb"
-  username                = "<db_user>"
-  password                = "<db_pass>"
+  username                = var.MYSQL_USERNAME
+  password                = var.MYSQL_PASSWORD
   parameter_group_name    = "default.mysql8.0"
   db_subnet_group_name    = aws_db_subnet_group.dac_db_subnet_group.name
   vpc_security_group_ids  = [aws_security_group.dac_db_sg.id]
